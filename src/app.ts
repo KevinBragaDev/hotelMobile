@@ -1,13 +1,12 @@
 import express from "express";
 import { Request, Response, NextFunction } from "express";
+import rotaTarefa from "./routes/tarefasRouter";
+
 const app = express();
-// Rota generica
-app.use((req: Request, res: Response, next: NextFunction) => {
-res.send("hello world");
-});
-// rota de erro
-app.use((err:Error, req: Request, res: Response, next: NextFunction) => {
-res.status(500).send("Erro na requisição" );
-});
+app.use(express.json());
+
+app.use("/tarefas", rotaTarefa);
+
+
 
 export default app;
