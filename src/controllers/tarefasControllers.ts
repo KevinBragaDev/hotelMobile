@@ -21,7 +21,7 @@ async function criarTarefa(req: Request, res: Response, next:NextFunction){
     return  res.status(201).json(result)
   } catch(error) {
     console.log("error ao criar", error)
-    return res.status(400).json({erro: "dados incpompletos"})
+    return res.status(400).json({erro: "dados incompletos"})
   }  
 }
 
@@ -33,7 +33,7 @@ async function atualizarTarefa(req: Request, res: Response, next:NextFunction){
     return  res.status(201).json(result)
   } catch(error) {
       console.log("error ao atualizar", error)
-      return res.status(400).json({erro: "dados incpompletos"})
+      return res.status(400).json({erro: "dados incompletos"})
   }
 
 }
@@ -48,7 +48,7 @@ async function deletarTarefa(req: Request, res: Response, next:NextFunction){
       console.log("error ao deletar", error)
       return res.status(400).json({erro: "erro ao deletar tarefa"})
   }
-  res.send("Deletar uam tarefa")
+  res.send("Deletar uma tarefa")
 }
 
 export default {
