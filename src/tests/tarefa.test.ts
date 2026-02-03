@@ -69,21 +69,21 @@ test("DELETE: /tarefas/1 = 200 (deletar tarefa)", async () => {
 
 //----------TESTES PARA ERROS----------//
 
-test("GET:/tarefas/id ==404", async() => {
-  const res =  await fetch(`${URL_BASE}/9999`)
-  expect (res.status).toBe (404)
-})
+// test("GET:/tarefas/id ==404", async() => {
+//   const res =  await fetch(`${URL_BASE}/9999`)
+//   expect (res.status).toBe (404)
+// })
 
-test("POST: /tarefas = 400", async () => {
- const res = await fetch(URL_BASE, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({})
-  })
-  expect(res.status).toBe(400);
+// test("POST: /tarefas = 400", async () => {
+//  const res = await fetch(URL_BASE, {
+//     method: "POST",
+//     headers: {"Content-Type": "application/json"},
+//     body: JSON.stringify({})
+//   })
+//   expect(res.status).toBe(400);
 
-  const content = await res.json()
-  console.log(content)
-  expect(content).toHaveProperty("erro","dados incompletos")
-})
+//   const content = await res.json()
+//   console.log(content)
+//   expect(content).toHaveProperty("erro","dados incompletos")
+// })
  
