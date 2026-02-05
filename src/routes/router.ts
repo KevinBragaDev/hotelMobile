@@ -1,6 +1,7 @@
 import { Router } from "express";
 import rotaTarefa from "./tarefasRouter";
 import rotaLogin from "./loginRouter";
+
 import { createJWT } from "../utils/jwt";
 import { middleware } from "./jwtMiddleware";
 
@@ -9,6 +10,7 @@ const handlerRouter = Router();
 // rotas publicas
 handlerRouter.use("/tarefas", rotaTarefa);
 handlerRouter.use("/api/login", rotaLogin);
+
 
 
 
