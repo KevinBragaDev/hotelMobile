@@ -15,3 +15,21 @@ test("POST /", async () => {
     // expect(body.message).toBe("Login recebido com sucesso");
  
 });
+
+test("POST / create = 200", async () => {
+    const res = await fetch(url_base + "/cadastro", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            nome: "Teste",
+            email: "teste5@gmail.com",
+            senha: "123",
+            telefone: "1598825-1734",
+            cpf: "45646445685"
+        })
+    });
+    expect(res.status).toBe(200);
+    // const body = await res.json();
+    // expect(body.message).toBe("Login recebido com sucesso");
+ 
+});
