@@ -1,9 +1,8 @@
+// src/routes/reservaRouter.ts
 import { Router } from "express";
-import { criarReserva } from "../controllers/reservasController";
+import { criarPedidoEReserva } from "../controllers/reservasController";
 
 const rotaReserva = Router();
-
-rotaReserva.post("/pedidos", criarReserva)
-rotaReserva.post("/", criarReserva)
+rotaReserva.post("/", criarPedidoEReserva);
 
 export default rotaReserva;
