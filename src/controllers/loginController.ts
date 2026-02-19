@@ -27,7 +27,7 @@ export async function criarLogin(req: Request, res: Response, next:NextFunction)
         const {senha:_senha, ...usuario} = result
 
         // criar o token do usuario
-        const token = createJWT({usuario})
+        const token = createJWT(usuario)
         return res.status(200).json(token);
 
     } catch (error) {

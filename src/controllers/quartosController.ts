@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import quartoRepository from "../repositories/quartoRepository";
+import quartosRepository from "../repositories/quartosRepository";
 
 async function disponiveis(req: Request, res: Response, next: NextFunction) {
     const { dataInicio, dataFim, quantidade } = req.body;
@@ -11,11 +11,11 @@ async function disponiveis(req: Request, res: Response, next: NextFunction) {
     const dados = {dataInicio, dataFim, quantidade};
 
     try {
-        const quartos = await quartoRepository.disponiveis(dados);
+        const quartos = await quartosRepository.disponiveis(dados);
         if (!quartos){ throw new Error("Erro ao buscar os quartos")}
 
         for (let q of quartos){
-            const fotos = await quartoRepository.buscarFotoPorQuartoId(q.id);
+            const fotos = await quartosRepository.buscarFotoPorQuartoId(q.id);
             q.fotos = fotos;
         }
         res.status(200).json(quartos);

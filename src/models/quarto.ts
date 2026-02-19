@@ -1,6 +1,6 @@
 import { RowDataPacket } from "mysql2";
 
-export type Quarto = RowDataPacket & {
+export type Quartos = RowDataPacket & {
     id: number;
     nome: string;
     numero: string;
