@@ -1,51 +1,52 @@
-import { Request, Response, NextFunction} from "express";
-import reservaRepository from "../repositories/reservaRepository";
-
-export async function criarPedido(req: Request, res: Response , next: NextFunction) {
+import {Request, Response, NextFunction} from "express"
+import reservaRespository from "../repositories/reservaRepository";
+import {corrigirDataHora} from "../utils/datahora";
  
+export async function criarPedido(req:Request, res:Response, next:NextFunction) {
     const token = req.payload;
     const {pagamento, quartos} = req.body;
 
-    if (!token.id || !pagamento || !quartos) {
-        return res.status(400).json({ erro: "Dados incompletos" });
+    console.log(token.id, pagamento)
+    if (!token.id || !pagamento || !quartos ){
+        return res.status(401).json({erro: "Dados incompletos!"})
     }
-
+ 
     try {
         const dadosPedido = {
-            cliente_id: token.id,
-            pagamento: pagamento
+            usuario_id : 1,
+            cliente_id : token.id,
+            pagamento : pagamento
         }
-        
-        const pedidoID = await reservaRepository.fazerPedido(dadosPedido);
-        if (!pedidoID) {throw new Error("Erro ao criar pedido")}
-
+        // criar o Pedido
+        const pedidoID = await reservaRespository.fazerPedido(dadosPedido);
+        if (!pedidoID){throw new Error("Erro ao criar o Pedido")}
+       
+        //criar a reserva para cada um dos quartos
         let result = []
-        for (let q of quartos) {
+        for (let q of quartos){
             q.dataInicio = await corrigirDataHora(q.dataInicio, 14)
             q.dataFim = await corrigirDataHora(q.dataFim, 12)
-            const reservaID = await reservaRepository.fazerReserva(pedidoID, q);
-            if (!reservaID) {continue}
+            console.log('DADOS:', pedidoID, q)
+            const reservaID = await reservaRespository.fazerReserva(pedidoID, q)
+            if (!reservaID){continue}
+            console.log('feito')
             result.push({
                 ...q,
                 reservaID: reservaID,
-            });
+            })
         }
-            console.log(result);
-        
+        console.log(result)
 
         res.status(200).json({
-            message:"Reserva criada com sucesso",
+            message:"Reserva feita com sucesso",
             pedidoID: pedidoID,
             reservas: result
-        });
-        
-
+        })
+ 
+ 
     } catch (error) {
-        console.error("Erro ao criar pedido:", error);
-        return res.status(500).json({ erro: "Erro ao criar pedido" });
+        console.log("meu erro:", error)
+        return res.status(400).json({erro: "Reserva não efetuada!"})
     }
-
-    console.log(token.id, token.nome);
-    console.log(pagamento, quartos);
-    return res.sendStatus(200);
+ 
 }

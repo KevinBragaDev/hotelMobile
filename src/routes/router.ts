@@ -12,20 +12,10 @@ const handlerRouter = Router();
 
 
 // rotas publicas
-handlerRouter.use("/tarefas", rotaTarefa);
+
 handlerRouter.use("/api/login", rotaLogin);
-handlerRouter.use("/api/pedidos", rotaPedido);
 handlerRouter.use("/api/quartosDisponiveis", rotaQuartos);
 
-
-handlerRouter.use("/jwt", (req, res)=>{
-    const payload = {
-        id: 123,
-        nome: "fulano",
-        cargo: "cliente"
-    }
-    res.json(createJWT(payload))
-})
 
 // rotas privadas
 handlerRouter.use("/api/reservas", middleware, rotaReserva);

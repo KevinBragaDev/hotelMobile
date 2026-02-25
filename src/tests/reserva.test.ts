@@ -26,22 +26,20 @@ test("POST /api/reserva = 200", async () => {
             quartos: [
                 {
                     id: 5,
-                    usuario_id: 1,
                     dataInicio: "2024-07-01",
                     dataFim: "2024-07-05",
                 },
                 {
                     id: 9,
-                    usuario_id: 1,
-                    dataInicio: "2024-07-01",
-                    dataFim: "2024-07-05",
+                    dataInicio: "2024-07-02",
+                    dataFim: "2024-07-06",
                 }
             ]
         })
     })
     expect(resp.status).toBe(200);
-    // const json = await resp.json();
-    // console.log(json);
+    const json = await resp.json();
+    console.log(json);
 });
 
     

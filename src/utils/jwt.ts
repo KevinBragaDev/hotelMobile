@@ -11,7 +11,7 @@ export function createJWT(data:object){
         iat: Math.floor(Date.now() / 1000)
      }
     return jwt.sign(payload, JWT_SECRET, {
-        expiresIn: DURATION,
+        //expiresIn: DURATION,
         algorithm: "HS256"
     })
 }

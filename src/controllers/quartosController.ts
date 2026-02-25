@@ -1,30 +1,43 @@
 import { Request, Response, NextFunction } from "express";
 import quartosRepository from "../repositories/quartosRepository";
-
+import { corrigirDataHora } from "../utils/datahora";
+ 
 async function disponiveis(req: Request, res: Response, next: NextFunction) {
-    const { dataInicio, dataFim, quantidade } = req.body;
-
-    if (!dataInicio || !dataFim || !quantidade) {
+    let { inicio, fim, quantidade } = req.body;
+ 
+    if (!inicio || !fim || !quantidade) {
         return res.status(400).json({ erro: "Preencha os campos para consulta" });
     }
-
-    const dados = {dataInicio, dataFim, quantidade};
-
+ 
+ 
+    inicio = await corrigirDataHora(inicio, 14);
+    fim = await corrigirDataHora(fim, 12);
+ 
+ 
+    const dados = { dataInicio: inicio, dataFim: fim, quantidade };
+ 
     try {
-        const quartos = await quartosRepository.disponiveis(dados);
-        if (!quartos){ throw new Error("Erro ao buscar os quartos")}
-
-        for (let q of quartos){
-            const fotos = await quartosRepository.buscarFotoPorQuartoId(q.id);
-            q.fotos = fotos;
+        let quartos = await quartosRepository.disponiveis(dados);
+ 
+        if (!quartos || quartos.length === 0) {
+            return res.status(404).json({ erro: "Nenhum quarto disponível encontrado" });
         }
-        res.status(200).json(quartos);
+ 
+        await Promise.all(
+            quartos.map(async (q: any) => {
+                const fotos = await quartosRepository.buscarFotoPorQuartoId(q.id);
+                q.fotos = fotos;
+            })
+        );
+ 
+        return res.status(200).json(quartos);
+ 
     } catch (error) {
-        console.log(error)
-        return res.status(400).json({ erro: "Erro ao buscar os quartos" });
-    }     
+        console.error(error);
+        return res.status(500).json({ erro: "Erro interno ao buscar os quartos" });
+    }
 }
-
+ 
 export default {
     disponiveis
-}
+};

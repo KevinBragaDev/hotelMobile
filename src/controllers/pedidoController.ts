@@ -4,10 +4,12 @@ import pedidoRepository from "../repositories/pedidoRepository";
 import { pedido } from "../models/pedido";
 
 export async function criarPedido(req: Request, res: Response) {
+  const token = req.payload;
   const { cliente_id, pagamento } = req.body ?? {};
 
   // Validação dos campos esperados
   if (
+    !token?.id ||
     typeof cliente_id !== "number" ||
     typeof pagamento !== "string"
   ) {
@@ -17,6 +19,7 @@ export async function criarPedido(req: Request, res: Response) {
   }
 
   const novoPedido: pedido = {
+    usuario_id: token.id,
     cliente_id,
     pagamento,
   };
