@@ -8,7 +8,7 @@ export async function criarPedido(req:Request, res:Response, next:NextFunction) 
 
     console.log(token.id, pagamento)
     if (!token.id || !pagamento || !quartos ){
-        return res.status(401).json({erro: "Dados incompletos!"})
+        return res.status(400).json({erro: "Dados incompletos!"})
     }
  
     try {

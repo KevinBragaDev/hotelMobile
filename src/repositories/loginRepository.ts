@@ -22,13 +22,10 @@ async function cadastroCliente(dadosLogin: dadosLogin):Promise<Login | null> {
             dadosLogin.senha
         ]);
         if (result.insertId) {
-            const resultado: Login = { id:result.insertId, ...dadosLogin}
+            const resultado: Login = { id:result.insertId, ...dadosLogin, cargo: "cliente" } as Login;
             return resultado;
         }
         return null;
-    
-    
-    
     
     // const [rows] = await pool.query<Login[]>(sql, [dados.nome, dados.email, dados.telefone, dados.cpf, dados.senha]);
     // return rows.length ? rows[0] : null;
