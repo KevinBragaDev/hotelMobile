@@ -22,10 +22,10 @@ test("POST / create = 200", async () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             nome: "Teste",
-            email: "teste5@gmail.com",
+            email: "teste80@gmail.com",
             senha: "123",
-            telefone: "1598825-1734",
-            cpf: "45646445685"
+            telefone: "1598875-1734",
+            cpf: "45646485685"
         })
     });
     expect(res.status).toBe(200);
