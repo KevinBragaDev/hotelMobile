@@ -3,18 +3,18 @@ import quartosRepository from "../repositories/quartosRepository";
 import { corrigirDataHora } from "../utils/datahora";
  
 async function disponiveis(req: Request, res: Response, next: NextFunction) {
-    let { inicio, fim, quantidade } = req.body;
+    let { dataInicio, dataFim, quantidade } = req.body;
  
-    if (!inicio || !fim || !quantidade) {
+    if (!dataInicio || !dataFim || !quantidade) {
         return res.status(400).json({ erro: "Preencha os campos para consulta" });
     }
  
  
-    inicio = await corrigirDataHora(inicio, 14);
-    fim = await corrigirDataHora(fim, 12);
+    dataInicio = await corrigirDataHora(dataInicio, 14);
+    dataFim = await corrigirDataHora(dataFim, 12);
  
  
-    const dados = { dataInicio: inicio, dataFim: fim, quantidade };
+    const dados = { dataInicio, dataFim, quantidade };
  
     try {
         let quartos = await quartosRepository.disponiveis(dados);
